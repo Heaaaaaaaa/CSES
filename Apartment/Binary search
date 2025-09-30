@@ -1,0 +1,59 @@
+//
+//  main.cpp
+//  BInary_search
+//
+//  Created by Hea Seng Jun on 13/10/2022.
+//
+// undone
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#define vector vector <ll>
+#define ll long long
+#define wtf ios_base::sync_with_stdio(false);cin.tie(NULL);
+
+bool range(int target,int given,int diff)
+{
+    return(target<=given+diff&&target>=given-diff)
+        ?true
+        :false;
+}
+
+int binarySearch(int arr[], int l, int r, int x,int given,int diff)
+{
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+ 
+        // If the element is present at the middle
+        // itself
+        if (range(arr[mid],given,diff)==1)
+            return mid;
+ 
+        // If element is smaller than mid, then
+        // it can only be present in left subarray
+        if (arr[mid] > x)
+            return binarySearch(arr, l, mid - 1, x,given,diff);
+ 
+        // Else the element can only be present
+        // in right subarray
+        return binarySearch(arr, mid + 1, r, x,given,diff);
+    }
+ 
+    // We reach here when element is not
+    // present in array
+    return -1;
+}
+ 
+int main(void)
+{
+    int arr[] = { 2, 3, 4, 10, 40 };
+    int x = 10;
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int result = binarySearch(arr, 0, n - 1, x);
+    (result == -1)
+        ? cout << "Element is not present in array"
+        : cout << "Element is present at index " << result;
+    return 0;
+}
